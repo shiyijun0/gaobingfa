@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.bdqn.gaobingfa.mapper.BehaviorRecordSyncMapper">
+  <!--<cache></cache>-->
+  <resultMap id="BaseResultMap" type="cn.bdqn.gaobingfa.entity.BehaviorRecordSync">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="access_time" jdbcType="TIMESTAMP" property="accessTime" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="note" jdbcType="VARCHAR" property="note" />
+    <result column="owner_action" jdbcType="VARCHAR" property="ownerAction" />
+    <result column="warrant" jdbcType="VARCHAR" property="warrant" />
+    <result column="equipment_code" jdbcType="VARCHAR" property="equipmentCode" />
+    <result column="pic" jdbcType="VARCHAR" property="pic" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="people_id_card" jdbcType="VARCHAR" property="peopleIdCard" />
+  </resultMap>
+  
+  <!-- 存储过程-->
+  <!--<select id="countCode" parameterType="cn.bdqn.gaobingfa.entity.BehaviorRecordSync" statementType="CALLABLE">
+    {call count_code(#{code,mode=IN,jdbcType=VARCHAR},
+    #{cardStatus,mode=OUT,jdbcType=VARCHAR},
+    #{cardType,mode=OUT,jdbcType=VARCHAR}
+    )}
+  </select>-->
+
+  <sql id="Base_Column_List">
+    id, access_time, code, note, owner_action, warrant,pic,equipment_code,type,people_id_card
+  </sql>
+
+  <!-- 自主建支持-->
+  <!--抽取出 排序order by 以及 limit-->
+  <sql id="sortOffsetLimit">
+    <choose>
+      <when test="sort != null and sort.trim() != ''">
+        order by ${sort} ${order}
+      </when>
+      <otherwise>
+        order by id desc
+      </otherwise>
+    </choose>
+    <if test="offset != null and limit != null">
+      limit ${offset}, ${limit}
+    </if>
+  </sql>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap" flushCache="false"
+  useCache="true">
+    
+    select 
+    <include refid="Base_Column_List" />
+    from behavior_record_sync
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectAll" resultType="cn.bdqn.gaobingfa.entity.BehaviorRecordSync">
+
+    <bind name="bind_type" value="'%'+ cardType + '%'"/>
+    select * from behavior_record_sync
+    <where>
+      <if test="code!=null and code!=''">
+        and code like concat("%",#{code},"%")
+      </if>
+
+      <choose>
+        <when test="cardStatus!=null">
+          and card_status=#{cardStatus}
+        </when>
+        <when test="cardType!=null">
+          and card_type like #{bind_type}
+        </when>
+        <otherwise>
+          and code is not null
+        </otherwise>
+      </choose>
+
+
+    </where>
+
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from behavior_record_sync
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insertSelective" parameterType="cn.bdqn.gaobingfa.entity.BehaviorRecordSync">
+    insert into behavior_record_sync
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="accessTime != null">
+        access_time,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="note != null">
+        note,
+      </if>
+      <if test="ownerAction != null">
+        owner_action,
+      </if>
+      <if test="warrant != null">
+        warrant,
+      </if>
+      <if test="equipmentCode != null">
+        equipment_code,
+      </if>
+      <if test="pic != null">
+        pic,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="peopleIdCard != null">
+        people_id_card,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="accessTime != null">
+        #{accessTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null">
+        #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerAction != null">
+        #{ownerAction,jdbcType=VARCHAR},
+      </if>
+      <if test="warrant != null">
+        #{warrant,jdbcType=VARCHAR},
+      </if>
+      <if test="equipmentCode != null">
+        #{equipmentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="pic != null">
+        #{pic,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="peopleIdCard != null">
+        #{peopleIdCard,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <insert id="insert" parameterType="cn.bdqn.gaobingfa.entity.BehaviorRecordSync"
+  useGeneratedKeys="true" keyProperty="id">
+
+<selectKey keyProperty="id" resultType="long" order="BEFORE">
+  select if(max(id)=null ,1,max(id)+3) from behavior_record_sync
+</selectKey>
+
+    insert into behavior_record_sync(id,card_status,card_type) values (#{id},#{cardStatus},#{cardType})
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="cn.bdqn.gaobingfa.entity.BehaviorRecordSync">
+    update behavior_record_sync
+    <set>
+      <if test="accessTime != null">
+        access_time = #{accessTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null">
+        note = #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerAction != null">
+        owner_action = #{ownerAction,jdbcType=VARCHAR},
+      </if>
+      <if test="warrant != null">
+        warrant = #{warrant,jdbcType=VARCHAR},
+      </if>
+      <if test="equipmentCode != null">
+        equipment_code = #{equipmentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="pic != null">
+        pic = #{pic,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="peopleIdCard != null">
+        people_id_card = #{peopleIdCard,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+
+</mapper>

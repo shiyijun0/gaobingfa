@@ -3,6 +3,7 @@ package cn.bdqn.gaobingfa.controller;
 import cn.bdqn.gaobingfa.entity.BehaviorRecordSync;
 import cn.bdqn.gaobingfa.redis.RedisUtil;
 import cn.bdqn.gaobingfa.service.BaseService;
+import cn.bdqn.gaobingfa.service.BehaviorRecordSyncMapperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,9 @@ public class BehaviorRecordSyncController implements BaseController<BehaviorReco
        private BaseService<BehaviorRecordSync> baseService;
        @Autowired
        private RedisUtil redisUtil;
+
+       @Autowired
+       private BehaviorRecordSyncMapperService behaviorRecordSyncMapperService;
 
        @Resource
        private RedisTemplate<String, Object> redisTemplate;
@@ -97,4 +101,49 @@ public class BehaviorRecordSyncController implements BaseController<BehaviorReco
       Object b=  redisUtil.get("behaviorRecordSync");
         return a+"******:"+b;
     }
+
+
+    @RequestMapping("/deleteByPrimaryKey")
+    @ResponseBody
+    public int deleteByPrimaryKey(Long id) {
+        return behaviorRecordSyncMapperService.deleteByPrimaryKey(id);
+    }
+
+    @RequestMapping("/selectAll")
+    @ResponseBody
+    public List<BehaviorRecordSync> selectAll() {
+        return behaviorRecordSyncMapperService.selectAll();
+    }
+
+    @RequestMapping("/insertSelective")
+    @ResponseBody
+    public int insertSelective(BehaviorRecordSync record) {
+        return behaviorRecordSyncMapperService.insertSelective(record);
+    }
+
+    @RequestMapping("/selectByPrimaryKey")
+    @ResponseBody
+    public BehaviorRecordSync selectByPrimaryKey(Long id) {
+        return behaviorRecordSyncMapperService.selectByPrimaryKey(id);
+    }
+
+    @RequestMapping("/updateByPrimaryKeySelective")
+    @ResponseBody
+    public int updateByPrimaryKeySelective(BehaviorRecordSync record) {
+        return behaviorRecordSyncMapperService.updateByPrimaryKeySelective(record);
+    }
+
+    @RequestMapping("/guardCount")
+    @ResponseBody
+    public Integer guardCount(String warrant) {
+        return behaviorRecordSyncMapperService.guardCount(warrant);
+    }
+
+    @RequestMapping("/insert1")
+    @ResponseBody
+    public int insert1(BehaviorRecordSync behaviorRecordSync) {
+        return behaviorRecordSyncMapperService.insert(behaviorRecordSync);
+    }
+
+
 }
