@@ -34,6 +34,14 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
+
+		<!-- redis客户端-->
+		<dependency>
+			<groupId>redis.client</groupId>
+			<artifactId>jedis</artifactId>
+			<!--<version>2.8.1</version>-->
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
