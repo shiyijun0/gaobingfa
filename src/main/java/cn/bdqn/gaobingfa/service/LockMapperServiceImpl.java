@@ -5,6 +5,7 @@ import cn.bdqn.gaobingfa.mapper.LockMapperMapper;
 import org.apache.ibatis.logging.Log;
 import org.apache.ibatis.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
+//@CacheConfig(cacheNames = "product") //配置整个类的缓存cacheNames,相当于作用域
 public class LockMapperServiceImpl implements LockMapperService {
 
     private Log log= LogFactory.getLog(LockMapperServiceImpl.class);

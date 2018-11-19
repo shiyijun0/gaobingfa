@@ -1,24 +1,38 @@
 package cn.bdqn.gaobingfa.Ticket;
 
-import cn.bdqn.gaobingfa.service.MyLockServiceImpl;
 import org.springframework.stereotype.Component;
 
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 @Component
 public class TickeRunnable implements Runnable {
+    public static int count=100;
+ private   Lock lock=new ReentrantLock();
 
-  //private   Lock lock=new ReentrantLock();
- //@Resource(name = "myLockServiceImpl")
-  private   Lock lock=new MyLockServiceImpl();
+    private  CountDownLatch countDownLatch;
 
+    public TickeRunnable() {
+    }
+
+    public TickeRunnable(CountDownLatch countDownLatch) {
+        this.countDownLatch = countDownLatch;
+    }
+
+    /*@Resource(name = "myLockServiceImpl")
+      private   Lock lock;*/
     @Override
     public void run() {
-        while (TickeTest.count>0){
+
+        while (count>0){
             lock.lock();
         try {
-           // synchronized (this) {
-                if (TickeTest.count > 0) {
-                    System.out.println(Thread.currentThread().getName() + "售出第" + TickeTest.count-- + "张火车票");
+            // 线程等待
+            countDownLatch.await();
+            //synchronized (this) {
+                if (count > 0) {
+                    System.out.println(Thread.currentThread().getName() + "售出第" + count-- + "张火车票");
                 }
          //   }
         }catch (Exception e){
@@ -32,8 +46,6 @@ public class TickeRunnable implements Runnable {
   }catch (Exception e){
   e.printStackTrace();
   }
-
-
         }
     }
 }

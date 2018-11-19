@@ -17,6 +17,7 @@ public class MyLockServiceImpl implements Lock {
 
     private LockMapper lockMapper=new LockMapper();
 
+
     @Autowired
     private LockMapperMapper lockMapperMapper;
 
@@ -26,7 +27,8 @@ public class MyLockServiceImpl implements Lock {
     public void lock() {
       if(tryLock()) return;
       try {
-          Thread.sleep(1000);
+          Thread.sleep(1);
+          log.error("*********lock*****");
       }catch (Exception e){
 
       }
@@ -40,14 +42,14 @@ public class MyLockServiceImpl implements Lock {
 
     @Override
     public boolean tryLock() {
-        try {
+       /* try {
             lockMapper.setId(num);
             lockMapper.setAge(10);
             lockMapper.setName("北高峰线");
           lockMapperMapper.insert(lockMapper);
         }catch (Exception e){
             return false;
-        }
+        }*/
         return true;
     }
 
@@ -58,7 +60,7 @@ public class MyLockServiceImpl implements Lock {
 
     @Override
     public void unlock() {
-lockMapperMapper.delete(num);
+     //lockMapperMapper.delete(num);
     }
 
     @Override
