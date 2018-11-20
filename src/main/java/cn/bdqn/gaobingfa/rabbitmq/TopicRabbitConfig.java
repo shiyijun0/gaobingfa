@@ -32,9 +32,10 @@ public class TopicRabbitConfig {
         return new Queue(TopicRabbitConfig.messages);
     }
 
+
     @Bean
     TopicExchange exchange() {
-        return new TopicExchange("exchange");
+        return new TopicExchange("topicExchange");
     }
 
     @Bean
