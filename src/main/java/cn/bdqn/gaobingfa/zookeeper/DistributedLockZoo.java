@@ -2,6 +2,7 @@ package cn.bdqn.gaobingfa.zookeeper;
 
 import org.apache.zookeeper.*;
 import org.apache.zookeeper.data.Stat;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,7 +16,8 @@ import java.util.concurrent.locks.Lock;
 /**
  * Created by liuyang on 2017/4/20.
  */
-public class DistributedLock implements Lock, Watcher {
+@Component
+public class DistributedLockZoo implements Lock, Watcher {
     private ZooKeeper zk = null;
     // 根节点
     private String ROOT_LOCK = "/locks";
@@ -30,12 +32,15 @@ public class DistributedLock implements Lock, Watcher {
     private int sessionTimeout = 30000;
     private List<Exception> exceptionList = new ArrayList<Exception>();
 
+    public DistributedLockZoo() {
+    }
+
     /**
      * 配置分布式锁
      * @param config 连接的url
      * @param lockName 竞争资源
      */
-    public DistributedLock(String config, String lockName) {
+    public DistributedLockZoo(String config, String lockName) {
         this.lockName = lockName;
         try {
             // 连接zookeeper

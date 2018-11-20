@@ -17,9 +17,9 @@ public class Test {
 
         Runnable runnable = new Runnable() {
             public void run() {
-                DistributedLock lock = null;
+                DistributedLockZoo lock = null;
                 try {
-                    lock = new DistributedLock("39.105.169.182:2181", "test1");
+                    lock = new DistributedLockZoo("39.105.169.182:2181", "test1");
                     while (count>0){
                         lock.lock();
                         //secskill();

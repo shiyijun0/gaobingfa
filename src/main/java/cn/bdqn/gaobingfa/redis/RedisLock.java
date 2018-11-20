@@ -1,17 +1,20 @@
 package cn.bdqn.gaobingfa.redis;
 
-import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.logging.Log;
 import org.apache.ibatis.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+
+import javax.annotation.Resource;
+
 @Component
-@Slf4j
 public class RedisLock {
-    @Autowired
-    private StringRedisTemplate stringRedisTemplate;
+  /*  @Autowired
+    private StringRedisTemplate stringRedisTemplate;*/
+
+    @Resource
+    private RedisTemplate<String, Object> stringRedisTemplate;
 
     Log log = LogFactory.getLog(RedisLock.class);
 

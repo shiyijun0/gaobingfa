@@ -22,7 +22,8 @@ public class Service {
         pool = new JedisPool(config, "39.105.169.182", 6379, 3000);
     }
 
-    DistributedLock lock = new DistributedLock(pool);
+    //DistributedLock lock = new DistributedLock(pool);
+    DistributedLock lock = new DistributedLock();
 
     int n = 500; int count=100;
 
@@ -35,7 +36,7 @@ public class Service {
          System.out.println(Thread.currentThread().getName() + "售出第" + count-- + "张火车票");
      }
             boolean flag=  lock.releaseLock("resource", indentifier);
-            System.out.println(flag==true);
+           // System.out.println(flag==true);
      }
        // System.out.println(--n+"********");
 

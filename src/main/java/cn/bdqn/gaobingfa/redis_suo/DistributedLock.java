@@ -1,8 +1,12 @@
 package cn.bdqn.gaobingfa.redis_suo;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.Transaction;
 import redis.clients.jedis.exceptions.JedisException;
 
@@ -12,12 +16,51 @@ import java.util.UUID;
 /**
  * Created by liuyang on 2017/4/20.
  */
+@Component
 public class DistributedLock {
-    private final JedisPool jedisPool;
+   /* private final JedisPool jedisPool;
 
     public DistributedLock(JedisPool jedisPool) {
         this.jedisPool = jedisPool;
+    }*/
+
+   // @Value("${spring.redis.host}")
+    private static String host = "127.0.0.1";
+
+    @Value("${spring.redis.port}")
+    private static int port = 6379;
+
+    // 0 - never expire
+    private int expire = 0;
+
+    //timeout for jedis try to connect to redis server, not expire time! In milliseconds
+    @Value("${spring.redis.timeout}")
+    private static int timeout = 0;
+
+    @Value("${spring.redis.password}")
+    private static String password = "";
+
+
+    @Autowired
+    private static JedisPool jedisPool = null;
+
+    /**
+     * 初始化方法
+     */
+
+    static {
+        if (jedisPool == null) {
+            if (password != null && !"".equals(password)) {
+                jedisPool = new JedisPool(new JedisPoolConfig(), host, port, timeout, password);
+            } else if (timeout != 0) {
+                jedisPool = new JedisPool(new JedisPoolConfig(), host, port, timeout);
+            } else {
+                jedisPool = new JedisPool(new JedisPoolConfig(), host, port);
+            }
+
+        }
     }
+
 
     /**
      * 加锁
@@ -36,7 +79,7 @@ public class DistributedLock {
             // 随机生成一个value
             String identifier = UUID.randomUUID().toString();
             // 锁名，即key值
-            String lockKey = "lock:" + locaName;
+            String lockKey = "lock1:" + locaName;
             // 超时时间，上锁后超过此时间则自动释放锁
             int lockExpire = (int)(timeout / 1000);
 
