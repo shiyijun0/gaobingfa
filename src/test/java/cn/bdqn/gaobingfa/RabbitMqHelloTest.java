@@ -18,4 +18,6 @@ public class RabbitMqHelloTest {
     public void send(){
         helloSender.send();
     }
+
+
 }
