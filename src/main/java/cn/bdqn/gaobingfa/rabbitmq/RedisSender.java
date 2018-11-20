@@ -1,5 +1,6 @@
 package cn.bdqn.gaobingfa.rabbitmq;
 
+import cn.bdqn.gaobingfa.entity.LockMapper;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -9,7 +10,7 @@ public class RedisSender {
     @Autowired
     private AmqpTemplate amqpTemplate;
 
-    public  void setAmqpTemplate(Object msg){
+    public  void setAmqpTemplate(LockMapper msg){
 
         this.amqpTemplate.convertAndSend("redis_lock",msg);
     }
