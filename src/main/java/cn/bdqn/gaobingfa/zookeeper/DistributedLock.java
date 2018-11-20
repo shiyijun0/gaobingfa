@@ -60,19 +60,21 @@ public class DistributedLock implements Lock, Watcher {
             this.countDownLatch.countDown();
         }
     }
-
+private   int count=100;
     public void lock() {
         if (exceptionList.size() > 0) {
             throw new LockException(exceptionList.get(0));
         }
         try {
-            if (this.tryLock()) {
-                System.out.println(Thread.currentThread().getName() + " " + lockName + "获得了锁");
-                return;
-            } else {
-                // 等待锁
-                waitForLock(WAIT_LOCK, sessionTimeout);
-            }
+                if (this.tryLock()) {
+                  //  System.out.println(Thread.currentThread().getName() + " " + lockName + "获得了锁");
+                    return;
+
+                } else {
+                    // 等待锁
+                    waitForLock(WAIT_LOCK, sessionTimeout);
+                }
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (KeeperException e) {
@@ -89,7 +91,7 @@ public class DistributedLock implements Lock, Watcher {
             // 创建临时有序节点
             CURRENT_LOCK = zk.create(ROOT_LOCK + "/" + lockName + splitStr, new byte[0],
                     ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL_SEQUENTIAL);
-            System.out.println(CURRENT_LOCK + " 已经创建");
+           // System.out.println(CURRENT_LOCK + " 已经创建");
             // 取所有子节点
             List<String> subNodes = zk.getChildren(ROOT_LOCK, false);
             // 取出所有lockName的锁

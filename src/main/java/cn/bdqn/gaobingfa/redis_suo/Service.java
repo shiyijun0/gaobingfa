@@ -24,13 +24,20 @@ public class Service {
 
     DistributedLock lock = new DistributedLock(pool);
 
-    int n = 500;
+    int n = 500; int count=100;
 
     public void seckill() {
         // 返回锁的value值，供释放锁时候进行判断
+        while (count>0){
         String indentifier = lock.lockWithTimeout("resource", 5000, 1000);
-        System.out.println(Thread.currentThread().getName() + "获得了锁");
-        System.out.println(--n);
-        lock.releaseLock("resource", indentifier);
+       // System.out.println(Thread.currentThread().getName() + "获得了锁"+indentifier);
+     if(count>0){
+         System.out.println(Thread.currentThread().getName() + "售出第" + count-- + "张火车票");
+     }
+            boolean flag=  lock.releaseLock("resource", indentifier);
+            System.out.println(flag==true);
+     }
+       // System.out.println(--n+"********");
+
     }
 }
