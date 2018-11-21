@@ -72,11 +72,16 @@
 			<artifactId>zookeeper</artifactId>
 			<version>3.4.9</version>
 		</dependency>
-
+        <!-- rabbitmq消息中间件-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-amqp</artifactId>
 		</dependency>
+                <!--activemq消息中间件-->
+		<dependency>
+			 <groupId>org.springframework.boot</groupId>
+			 <artifactId>spring-boot-starter-activemq</artifactId>
+			 </dependency>
 
 		<!-- redis客户端-->
 		<!--<dependency>
