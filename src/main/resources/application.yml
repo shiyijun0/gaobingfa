@@ -24,7 +24,9 @@ spring:
           max-wait: -1
           min-idle: 1
           max-active: 100
-          max-idle: 20
+          max-idle: 50
+
+
 
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
