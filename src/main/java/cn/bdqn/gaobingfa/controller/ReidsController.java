@@ -55,7 +55,7 @@ public class ReidsController {
         return stringRedisTemplate.opsForHash().entries("hash");
     }
 
-    @RequestMapping("/liu")//流水线
+   /* @RequestMapping("/liu")//流水线
     public void liu(){
         //开启流水线
         SessionCallback callback=(SessionCallback) (RedisOperations ops) ->
@@ -74,5 +74,5 @@ public class ReidsController {
         System.out.println(end-start);
 
 
-    }
+    }*/
 }
