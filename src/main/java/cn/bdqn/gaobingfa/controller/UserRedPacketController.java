@@ -36,7 +36,7 @@ public class UserRedPacketController {
 
 
     //乐观锁请求，使用时修改javascript的请求路径
-    @RequestMapping(value = "/grapRedPacketForVersion")
+    @RequestMapping(value = "/grapRedPacketForVersion",method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> grapRedPacketForVersion(Long redPacketId, Long userId) {
         // 抢红包
@@ -48,7 +48,7 @@ public class UserRedPacketController {
         return retMap;
     }
 
-    @RequestMapping(value = "/grapRedPacketByRedis")
+    @RequestMapping(value = "/grapRedPacketByRedis",method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> grapRedPacketByRedis(Long redPacketId, Long userId) {
         Map<String, Object> resultMap = new HashMap<String, Object>();
