@@ -26,7 +26,7 @@ public class RedisRedPacketServiceImpl implements RedisRedPacketService {
 
 	private static final String PREFIX = "red_packet_list_";
 	// 每次取出1000条，避免一次取出消耗太多内存
-	private static final int TIME_SIZE = 1000;
+	private static final int TIME_SIZE = 100;
 
 	@Autowired
 	private RedisTemplate redisTemplate = null; // RedisTemplate
