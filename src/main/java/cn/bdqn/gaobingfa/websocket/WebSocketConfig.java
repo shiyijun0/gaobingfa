@@ -1,13 +1,10 @@
 package cn.bdqn.gaobingfa.websocket;
 
-import org.springframework.context.annotation.Configuration;
-import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.AbstractWebSocketMessageBrokerConfigurer;
-import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
-@Configuration
-@EnableWebSocketMessageBroker//支持使用MessageMapping 相当于用requestMapping
+//@Configuration
+//@EnableWebSocketMessageBroker//支持使用MessageMapping 相当于用requestMapping
 //@MessageMapping("/socket")
 public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
     @Override

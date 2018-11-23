@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>抢红包</title>
+    <script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+<h1>红包需求</h1>
+</body>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        //模拟30000个异步请求，进行并发
+        var max = 30000;
+        for (var i = 1; i <= max; i++) {
+            //jQuery的post请求，请注意这是异步请求
+            $.post({
+                //请求抢id为1的红包
+                //根据自己请求修改对应的url和大红包编号
+                data:{"redPacketId" : 1,"userId" : i},
+                url: "/userRedPacket/grapRedPacket",
+                //成功后的方法
+                success: function (result) {
+                    console.log(result.get("result")+"**********")
+                    console.log(result.get("message")+"**********")
+                }
+            });
+        }
+    });
+</script>
+</html>
