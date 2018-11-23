@@ -18,7 +18,7 @@ import org.springframework.data.redis.core.BoundListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-
+import redis.clients.jedis.Jedis;
 
 
 @Service
@@ -58,9 +58,11 @@ public class RedisRedPacketServiceImpl implements RedisRedPacketService {
 			// 保存红包信息
 			for (int j = 0; j < userIdList.size(); j++) {
 				String args = userIdList.get(j).toString();
-				String[] arr = args.split("-");
+				String[] arr = args.split("00000000");
 				String userIdStr = arr[0];
 				String timeStr = arr[1];
+				/*String userIdStr = args.substring(0,1);
+				String timeStr = args.substring(1);*/
 				Long userId = Long.parseLong(userIdStr);
 				Long time = Long.parseLong(timeStr);
 				// 生成抢红包信息
@@ -97,9 +99,9 @@ public class RedisRedPacketServiceImpl implements RedisRedPacketService {
 			conn.setAutoCommit(false);
 			stmt = conn.createStatement();
 			for (UserRedPacket userRedPacket : userRedPacketList) {
-				String sql1 = "update T_RED_PACKET set stock = stock-1 where id=" + userRedPacket.getRedPacketId();
+				String sql1 = "update t_red_packet set stock = stock-1 where id=" + userRedPacket.getRedPacketId();
 				DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				String sql2 = "insert into T_USER_RED_PACKET(red_packet_id, user_id, " + "amount, grab_time, note)"
+				String sql2 = "insert into t_user_red_packet(red_packet_id, user_id, " + "amount, grab_time, note)"
 						+ " values (" + userRedPacket.getRedPacketId() + ", " + userRedPacket.getUserId() + ", "
 						+ userRedPacket.getAmount() + "," + "'" + df.format(userRedPacket.getGrabTime()) + "'," + "'"
 						+ userRedPacket.getNote() + "')";

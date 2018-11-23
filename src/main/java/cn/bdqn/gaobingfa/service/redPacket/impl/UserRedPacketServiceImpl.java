@@ -198,7 +198,7 @@ public class UserRedPacketServiceImpl implements UserRedPacketService {
 
 
 	@Autowired
-	private static JedisPool jedisPool = null;
+	public static JedisPool jedisPool = null;
 
 	/**
 	 * 初始化方法
@@ -220,7 +220,8 @@ public class UserRedPacketServiceImpl implements UserRedPacketService {
 	@Override
 	public Long grapRedPacketByRedis(Long redPacketId, Long userId) {
 		// 当前抢红包用户和日期信息
-		String args = userId + "-" + System.currentTimeMillis();
+		//String args = userId + "-" + System.currentTimeMillis();
+		String args = userId + "00000000" + System.currentTimeMillis();
 		Long result = null;
 		// 获取底层Redis操作对象
 		//Jedis jedis = (Jedis) redisTemplate.getConnectionFactory().getConnection().getNativeConnection();
