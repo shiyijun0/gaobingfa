@@ -7,15 +7,15 @@ import cn.bdqn.gaobingfa.mapper.UserRedPacketMapper;
 import cn.bdqn.gaobingfa.service.redPacket.RedisRedPacketService;
 import cn.bdqn.gaobingfa.service.redPacket.UserRedPacketService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
-
-
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
 
 @Service
 public class UserRedPacketServiceImpl implements UserRedPacketService {
@@ -160,8 +160,10 @@ public class UserRedPacketServiceImpl implements UserRedPacketService {
 	@Autowired
 	private RedisTemplate redisTemplate = null;
 
+
 	@Autowired
 	private RedisRedPacketService redisRedPacketService = null;
+
 
 	// Lua脚本
 	String script = "local listKey = 'red_packet_list_'..KEYS[1] \n"
@@ -177,14 +179,55 @@ public class UserRedPacketServiceImpl implements UserRedPacketService {
 	// 在缓存LUA脚本后，使用该变量保存Redis返回的32位的SHA1编码，使用它去执行缓存的LUA脚本[加入这句话]
 	String sha1 = null;
 
+
+	@Value("${spring.redis.host}")
+	private static String host = "39.105.169.182";
+
+	@Value("${spring.redis.port}")
+	private static int port = 6379;
+
+	// 0 - never expire
+	private int expire = 0;
+
+	//timeout for jedis try to connect to redis server, not expire time! In milliseconds
+	@Value("${spring.redis.timeout}")
+	private static int timeout = 0;
+
+	@Value("${spring.redis.password}")
+	private static String password = "";
+
+
+	@Autowired
+	private static JedisPool jedisPool = null;
+
+	/**
+	 * 初始化方法
+	 */
+
+	static {
+		if (jedisPool == null) {
+			if (password != null && !"".equals(password)) {
+				jedisPool = new JedisPool(new JedisPoolConfig(), host, port, timeout, password);
+			} else if (timeout != 0) {
+				jedisPool = new JedisPool(new JedisPoolConfig(), host, port, timeout);
+			} else {
+				jedisPool = new JedisPool(new JedisPoolConfig(), host, port);
+			}
+
+		}
+	}
+
 	@Override
 	public Long grapRedPacketByRedis(Long redPacketId, Long userId) {
 		// 当前抢红包用户和日期信息
 		String args = userId + "-" + System.currentTimeMillis();
 		Long result = null;
 		// 获取底层Redis操作对象
-		Jedis jedis = (Jedis) redisTemplate.getConnectionFactory().getConnection().getNativeConnection();
+		//Jedis jedis = (Jedis) redisTemplate.getConnectionFactory().getConnection().getNativeConnection();
+		// 获取连接
+		Jedis jedis = null;
 		try {
+			jedis = jedisPool.getResource();
 			// 如果脚本没有加载过，那么进行加载，这样就会返回一个sha1编码
 			if (sha1 == null) {
 				sha1 = jedis.scriptLoad(script);

@@ -26,6 +26,7 @@ spring:
           max-active: 100
           max-idle: 50
 
+
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver

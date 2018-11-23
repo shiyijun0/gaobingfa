@@ -24,7 +24,7 @@ public class DistributedLock {
         this.jedisPool = jedisPool;
     }*/
 
-   // @Value("${spring.redis.host}")
+    @Value("${spring.redis.host}")
     private static String host = "127.0.0.1";
 
     @Value("${spring.redis.port}")
