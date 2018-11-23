@@ -18,12 +18,14 @@
             $.post({
                 //请求抢id为1的红包
                 //根据自己请求修改对应的url和大红包编号
+
                 data:{"redPacketId" : 1,"userId" : i},
-                url: "/userRedPacket/grapRedPacket",
+                url: "/userRedPacket/grapRedPacketByRedis",
                 //成功后的方法
                 success: function (result) {
-                    console.log(result.get("result")+"**********")
-                    console.log(result.get("message")+"**********")
+                    console.log(result)
+                    console.log(result.message)
+
                 }
             });
         }
