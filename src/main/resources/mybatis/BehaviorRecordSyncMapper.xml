@@ -78,6 +78,22 @@
 
   </select>
 
+  <select id="select" parameterType="cn.bdqn.gaobingfa.entity.BehaviorRecordSync" resultType="cn.bdqn.gaobingfa.entity.BehaviorRecordSync">
+   <bind name="code_bind" value="'%'+code+'%'"/>
+    SELECT <include refid="Base_Column_List"/>
+    from behavior_record_sync
+    <where>
+      <if test="code!=null and code!=''">
+      and  code like #{code_bind}
+      </if>
+      <if test="note!=null and note!=''">
+       AND note LIKE concat("%",#{note},"%")
+
+      </if>
+    </where>
+  </select>
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from behavior_record_sync
     where id = #{id,jdbcType=BIGINT}

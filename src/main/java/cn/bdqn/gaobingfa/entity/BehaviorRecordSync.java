@@ -1,5 +1,6 @@
 package cn.bdqn.gaobingfa.entity;
 
+import cn.bdqn.gaobingfa.Util.PageParams;
 import cn.bdqn.gaobingfa.Util.TimeUtils;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -44,6 +45,16 @@ public class BehaviorRecordSync implements Serializable {
     private  String peopleIdCard;
 
     private String keyPerson;
+    @Transient
+    private PageParams pageParams;//分页参数
+
+    public PageParams getPageParams() {
+        return pageParams;
+    }
+
+    public void setPageParams(PageParams pageParams) {
+        this.pageParams = pageParams;
+    }
 
     public BehaviorRecordSync() {
     }

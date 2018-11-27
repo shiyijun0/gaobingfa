@@ -64,4 +64,10 @@ public class BehaviorRecordSyncMapperServiceImpl implements  BehaviorRecordSyncM
         System.out.println("**********"+behaviorRecordSync.getId());
         return i+behaviorRecordSync.getId().intValue();
     }
+
+    @Override
+    public List<BehaviorRecordSync> select(BehaviorRecordSync record) {
+        PageHelper.startPage(record.getPageParams().getStart(),record.getPageParams().getLimit());
+        return behaviorRecordSyncMapper.select(record);
+    }
 }

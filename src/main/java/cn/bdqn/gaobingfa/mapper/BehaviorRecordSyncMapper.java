@@ -1,6 +1,5 @@
 package cn.bdqn.gaobingfa.mapper;
 
-import cn.bdqn.gaobingfa.Util.PageParams;
 import cn.bdqn.gaobingfa.entity.BehaviorRecordSync;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -29,7 +28,7 @@ public interface BehaviorRecordSyncMapper {
 
     int insert(BehaviorRecordSync behaviorRecordSync);
 
-    //存储过程
+    List<BehaviorRecordSync> select(BehaviorRecordSync record);
 
 
 

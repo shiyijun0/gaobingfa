@@ -1,11 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script th:src="@{/jquery.js}"></script>
 </head>
 <body>
 <h1>返回视图{{name}}</h1>
 <h1>名称：${name}</h1>
 </body>
+<script>
+    $(function () {
+        var data={
+            code:'in',
+            note:"1",
+            pageParams:{
+                start:1,
+                limit:4
+            }
+        }
+
+        $.post({
+            url:"/api/find_page",
+            contentType:"application/json",  //此处告诉传递参数是json类型
+            data:JSON.stringify(data),  //将json转化为字符串传递,
+            success:function (result) {
+                console.log(result)
+            }
+        })
+    })
+</script>
 </html>

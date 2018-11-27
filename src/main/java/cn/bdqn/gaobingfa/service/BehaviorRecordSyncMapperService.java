@@ -16,6 +16,7 @@ public interface BehaviorRecordSyncMapperService {
 
     int updateByPrimaryKeySelective(BehaviorRecordSync record);
 
+    List<BehaviorRecordSync> select(BehaviorRecordSync record);
 
     //获取门禁抓怕次数
     Integer guardCount(String warrant);
