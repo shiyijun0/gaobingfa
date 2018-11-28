@@ -10,7 +10,9 @@ import org.springframework.scheduling.annotation.AsyncConfigurerSupport;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.servlet.HandlerAdapter;
+import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,5 +27,12 @@ public class GaobingfaApplication extends AsyncConfigurerSupport {
 		SpringApplication.run(GaobingfaApplication.class, args);
 	}
 
+	@Bean
+	public ViewResolver viewResolver(){
+		InternalResourceViewResolver viewResolver=new InternalResourceViewResolver();
+		viewResolver.setPrefix("/web/jsp/");
+		viewResolver.setSuffix(".jsp");
+		return viewResolver;
+	}
 
 }

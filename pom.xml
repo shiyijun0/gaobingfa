@@ -167,6 +167,13 @@
 			<version>3.2.Final</version>
 		</dependency>
 
+		<!-- 下载excle表格 -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.16</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
