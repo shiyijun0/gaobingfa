@@ -6,8 +6,10 @@ import cn.bdqn.gaobingfa.entity.User;
 import cn.bdqn.gaobingfa.service.BehaviorRecordSyncMapperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -83,4 +85,44 @@ public class TestController {
         return modelAndView;
     }
 
+    @RequestMapping("/array")
+    public ModelAndView array(@RequestBody List<String> list){
+        ModelAndView modelAndView=new ModelAndView();
+        System.out.println(list.size());
+        modelAndView.setViewName("index");
+        return modelAndView;
+    }
+    //@RequestBody 将json数据从后台传过来转化为java数组或者集合
+    @RequestMapping("/array1")
+    public String array1(@RequestBody String[] list, Model model){
+        model.addAttribute("sd");//绑定数据
+        System.out.println(list.length);
+        return "redirect:/api/page";
+       // return modelAndView;
+    }
+//绑定对象重定向  因为重定向是以字符串参数传递的，而现在这个RedirectAttributes 保存到session里，重定向后清除
+    @RequestMapping("/bingrole")
+    public String bingrole(RedirectAttributes redirectAttributes,BehaviorRecordSync behaviorRecordSync){
+        redirectAttributes.addFlashAttribute("behaviorRecordSync",behaviorRecordSync);
+        return "redirect:/api/redirectAttributes";
+
+    }
+    @RequestMapping("/redirectAttributes")
+    public ModelAndView redirectAttributes(BehaviorRecordSync behaviorRecordSync){
+        ModelAndView modelAndView=new ModelAndView();
+        modelAndView.setView(new MappingJackson2JsonView());
+        modelAndView.addObject(behaviorRecordSync);
+        return modelAndView;
+
+
+    }
+
+    @RequestMapping("/getHeader")
+    public String testHeander(@RequestHeader(value = "User-Agent",required = false,defaultValue = "attribute")
+                              String userAgent,@CookieValue(value = "JSESSIONID",required = true,defaultValue = "MyJsessionId")
+                              String jessionId){
+        System.out.println("useger****"+userAgent);
+        System.out.println("jessid*****"+jessionId);
+        return "index";
+    }
 }
