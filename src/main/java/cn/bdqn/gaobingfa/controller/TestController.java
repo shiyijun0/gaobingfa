@@ -1,5 +1,6 @@
 package cn.bdqn.gaobingfa.controller;
 
+
 import cn.bdqn.gaobingfa.aop.RoleService;
 import cn.bdqn.gaobingfa.entity.BehaviorRecordSync;
 import cn.bdqn.gaobingfa.entity.User;
@@ -50,7 +51,7 @@ public class TestController {
     }
 
     @RequestMapping("/parm")
-    public ModelAndView parm(@RequestParam("role_name") String roleName ,String note){
+    public ModelAndView parm(@RequestParam("role_name") String roleName , String note){
         System.out.println("******"+roleName);
         System.out.println("*******"+note);
         ModelAndView modelAndView=new ModelAndView();
@@ -102,14 +103,14 @@ public class TestController {
     }
 //绑定对象重定向  因为重定向是以字符串参数传递的，而现在这个RedirectAttributes 保存到session里，重定向后清除
     @RequestMapping("/bingrole")
-    public String bingrole(RedirectAttributes redirectAttributes,BehaviorRecordSync behaviorRecordSync){
+    public String bingrole(RedirectAttributes redirectAttributes, BehaviorRecordSync behaviorRecordSync){
         redirectAttributes.addFlashAttribute("behaviorRecordSync",behaviorRecordSync);
         return "redirect:/api/redirectAttributes";
 
     }
     @RequestMapping("/redirectAttributes")
     public ModelAndView redirectAttributes(BehaviorRecordSync behaviorRecordSync){
-        ModelAndView modelAndView=new ModelAndView();
+        ModelAndView modelAndView = new ModelAndView();
         modelAndView.setView(new MappingJackson2JsonView());
         modelAndView.addObject(behaviorRecordSync);
         return modelAndView;
