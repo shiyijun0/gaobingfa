@@ -40,12 +40,13 @@ public class TestController {
     @RequestMapping(value = "/index",method = RequestMethod.GET)
     public ModelAndView index1(HttpSession httpSession, HttpServletRequest httpServletRequest){
         //, @SessionAttribute(name = "age",required = false) int age
-        ModelAndView modelAndView=new ModelAndView();
-      String  name=  httpServletRequest.getParameter("name");
-      modelAndView.addObject(name);
-        System.out.println("********"+name);
-       modelAndView.setView(new MappingJackson2JsonView());
+        ModelAndView modelAndView = new ModelAndView();
+        String name = httpServletRequest.getParameter("name");
+        modelAndView.addObject(name);
+        System.out.println("********" + name);
+        modelAndView.setView(new MappingJackson2JsonView());
         modelAndView.setViewName("index");
+
         return modelAndView;
     }
 
@@ -90,6 +91,7 @@ public class TestController {
         ModelAndView modelAndView=new ModelAndView();
         System.out.println(list.size());
         modelAndView.setViewName("index");
+
         return modelAndView;
     }
     //@RequestBody 将json数据从后台传过来转化为java数组或者集合
