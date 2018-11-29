@@ -1,8 +1,5 @@
 package cn.bdqn.gaobingfa.controller;
 
-import java.util.List;
-import java.util.Map;
-
 import cn.bdqn.gaobingfa.Util.PageParams;
 import cn.bdqn.gaobingfa.aop.RoleService;
 import cn.bdqn.gaobingfa.entity.BehaviorRecordSync;
@@ -22,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
+
+import java.util.List;
+import java.util.Map;
 
 
 @Controller
@@ -175,6 +175,7 @@ public class ViewController {
 			//生成Sheet
 			Sheet sheet= workbook.createSheet("所有行为记录");
 			//加载标题
+
 			Row title = sheet.createRow(0);
 			title.createCell(0).setCellValue("编号");
 			title.createCell(1).setCellValue("编码");
@@ -187,7 +188,6 @@ public class ViewController {
 				row.createCell(0).setCellValue(role.getId());
 				row.createCell(1).setCellValue(role.getCode());
 				row.createCell(2).setCellValue(role.getNote());
-
 			}
 	    };
 	}

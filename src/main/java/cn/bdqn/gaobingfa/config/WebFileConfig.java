@@ -1,16 +1,13 @@
 package cn.bdqn.gaobingfa.config;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-@Configuration
-@ComponentScan(basePackages = {"com.ssm.chapter15"})
-@EnableWebMvc
-public class WebConfig {
+/*@Configuration
+@ComponentScan(basePackages = {"cn.bdqn.gaobingfa.config"})
+@EnableWebMvc*/
+public class WebFileConfig {
 
 	@Bean(name = "multipartResolver")
 	public MultipartResolver initMultipartResolver() {

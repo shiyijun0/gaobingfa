@@ -1,8 +1,9 @@
 package cn.bdqn.gaobingfa.config;
 
+import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletRegistration.Dynamic;
-import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class MyWebAppInitializer
         extends AbstractAnnotationConfigDispatcherServletInitializer {
@@ -17,7 +18,7 @@ public class MyWebAppInitializer
 	@Override
 	protected Class<?>[] getServletConfigClasses() {
 		//可以返回Spring的Java配置文件数组
-		return new Class<?>[] { WebConfig.class };
+		return new Class<?>[] { WebFileConfig.class };
 	}
 
 	//DispatchServlet[修改为：DispatcherServlet]拦截请求匹配
