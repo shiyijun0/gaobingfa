@@ -1,10 +1,10 @@
 package cn.bdqn.gaobingfa.controller;
 
 
-import cn.bdqn.gaobingfa.aop.RoleService;
 import cn.bdqn.gaobingfa.entity.BehaviorRecordSync;
 import cn.bdqn.gaobingfa.entity.User;
 import cn.bdqn.gaobingfa.service.BehaviorRecordSyncMapperService;
+import cn.bdqn.gaobingfa.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

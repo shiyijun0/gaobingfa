@@ -8,24 +8,24 @@ import org.springframework.core.annotation.Order;
 @Order(1)
 public class RoleAspect {
     // * 代表任意返回类型的方法
-    @Before("execution(* cn.bdqn.gaobingfa.aop.RoleServiceImpl.print(..))")
+    @Before("execution(* cn.bdqn.gaobingfa.service.RoleServiceImpl.print(..))")
     public void before(){
         System.out.println("*****before**");
     }
-    @After("execution(* cn.bdqn.gaobingfa.aop.RoleServiceImpl.print(..))")
+    @After("execution(* cn.bdqn.gaobingfa.service.RoleServiceImpl.print(..))")
     public  void  after(){
         System.out.println("*********after******");
     }
-    @AfterReturning("execution(* cn.bdqn.gaobingfa.aop.RoleServiceImpl.print(..))")
+    @AfterReturning("execution(* cn.bdqn.gaobingfa.service.RoleServiceImpl.print(..))")
     public void afterreturning(){
         System.out.println("********afterReturning***");
     }
-    @AfterThrowing("execution(* cn.bdqn.gaobingfa.aop.RoleServiceImpl.print(..))")
+    @AfterThrowing("execution(* cn.bdqn.gaobingfa.service.RoleServiceImpl.print(..))")
     public void afterThrowing(){
         System.out.println("******afterThrowing***");
     }
 
-    @Pointcut("execution(* cn.bdqn.gaobingfa.aop.RoleServiceImpl.print(..))")
+    @Pointcut("execution(* cn.bdqn.gaobingfa.service.RoleServiceImpl.print(..))")
     public void print(){
 
     }

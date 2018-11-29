@@ -1,7 +1,8 @@
 package cn.bdqn.gaobingfa;
 
-import cn.bdqn.gaobingfa.aop.RoleService;
+
 import cn.bdqn.gaobingfa.entity.User;
+import cn.bdqn.gaobingfa.service.RoleService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
