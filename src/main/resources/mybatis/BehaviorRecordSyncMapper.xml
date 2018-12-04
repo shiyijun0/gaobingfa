@@ -30,6 +30,19 @@
   <!-- 自主建支持-->
   <!--抽取出 排序order by 以及 limit-->
   <sql id="sortOffsetLimit">
+
+   <!-- <trim prefix="where" prefixOverrides="and">
+     <if test="sd!=null">
+       as dd
+     </if>
+    </trim>-->
+
+
+<!--<trim prefix="set" prefixOverrides=",">
+</trim>-->
+
+
+
     <choose>
       <when test="sort != null and sort.trim() != ''">
         order by ${sort} ${order}
