@@ -1,6 +1,5 @@
 package cn.bdqn.gaobingfa.zookeeper1.zookeeper2.cluster;
 
-import bjsxt.zookeeper.cluster.ZKWatcher;
 
 public class Client1 {
 

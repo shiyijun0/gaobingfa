@@ -27,6 +27,7 @@ public class GaobingfaApplication extends AsyncConfigurerSupport {
 		return user;
 	}
 
+
 	@Bean(name = "messageSource")
 	public MessageSource initMessageSource(){
 		ReloadableResourceBundleMessageSource messageSource=new ReloadableResourceBundleMessageSource();
