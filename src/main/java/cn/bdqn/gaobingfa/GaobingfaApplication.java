@@ -11,6 +11,7 @@ import org.springframework.scheduling.annotation.AsyncConfigurerSupport;
 
 @SpringBootApplication
 @EnableCaching
+//@ServletComponentScan //过滤器
 //@EnableAsync
 public class GaobingfaApplication extends AsyncConfigurerSupport {
 

@@ -67,6 +67,7 @@ public class BehaviorRecordSyncMapperServiceImpl implements  BehaviorRecordSyncM
 
     @Override
     public List<BehaviorRecordSync> select(BehaviorRecordSync record) {
+        System.out.println("******执行代理去处理关系****");
         PageHelper.startPage(record.getPageParams().getStart(),record.getPageParams().getLimit());
         return behaviorRecordSyncMapper.select(record);
     }

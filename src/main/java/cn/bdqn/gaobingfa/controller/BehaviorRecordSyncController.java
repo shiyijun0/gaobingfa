@@ -1,9 +1,11 @@
 package cn.bdqn.gaobingfa.controller;
 
 import cn.bdqn.gaobingfa.entity.BehaviorRecordSync;
+import cn.bdqn.gaobingfa.exception.JdkFactory;
 import cn.bdqn.gaobingfa.redis.RedisUtil;
 import cn.bdqn.gaobingfa.service.BaseService;
 import cn.bdqn.gaobingfa.service.BehaviorRecordSyncMapperService;
+import cn.bdqn.gaobingfa.service.BehaviorRecordSyncMapperServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
@@ -144,6 +146,16 @@ public class BehaviorRecordSyncController implements BaseController<BehaviorReco
     public int insert1(BehaviorRecordSync behaviorRecordSync) {
         return behaviorRecordSyncMapperService.insert(behaviorRecordSync);
     }
+    @RequestMapping("/poxy")
+    @ResponseBody
+    public  List<BehaviorRecordSync> string(BehaviorRecordSync behaviorRecordSync){
+       /* BehaviorRecordSyncMapperService behaviorRecordSyncMapperService1= BehaviorRecordServiceFactory.getInstance();
+      return   behaviorRecordSyncMapperService1.select(behaviorRecordSync);*/
 
+        JdkFactory jdkProxy=new JdkFactory(new BehaviorRecordSyncMapperServiceImpl());
+        BehaviorRecordSyncMapperService mapperService=(BehaviorRecordSyncMapperService)jdkProxy.getproxy();
+     return    mapperService.select(behaviorRecordSync);
+
+    }
 
 }
