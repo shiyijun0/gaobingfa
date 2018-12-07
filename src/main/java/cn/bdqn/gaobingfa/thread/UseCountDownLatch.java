@@ -4,6 +4,7 @@ import java.util.concurrent.CountDownLatch;
 
 public class UseCountDownLatch {
 
+    //Semaphore
    static CountDownLatch countDownLatch=new CountDownLatch(100);
   static   Runnable runnable=new Runnable() {
         @Override
