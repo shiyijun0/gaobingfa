@@ -22,6 +22,7 @@ public class RedisLock1 {
      * @return
      */
     public boolean lock(String key,String value){
+        //如果key不存在，就设置value值，如果存在，不做任何操作
         if(stringRedisTemplate.opsForValue().setIfAbsent(key,value)){//对应setnx命令
             //可以成功设置,也就是key不存在
             return true;

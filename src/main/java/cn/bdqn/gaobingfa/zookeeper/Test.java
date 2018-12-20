@@ -6,7 +6,7 @@ package cn.bdqn.gaobingfa.zookeeper;
 public class Test {
     static int n = 500;
 
-    public static int count=1000;
+    public static int count=100;
 
     public static void secskill() {
         System.out.println(--n+"**************");
@@ -19,7 +19,7 @@ public class Test {
             public void run() {
                 DistributedLockZoo lock = null;
                 try {
-                    lock = new DistributedLockZoo("39.105.169.182:2181", "test1");
+                    lock = new DistributedLockZoo("39.105.169.182:2182,39.105.169.182:2181,132.232.73.46:2181,132.232.73.46:2182", "test1");
                     while (count>0){
                         lock.lock();
                         //secskill();
