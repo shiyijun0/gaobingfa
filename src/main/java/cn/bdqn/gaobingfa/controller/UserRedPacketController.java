@@ -3,6 +3,7 @@ package cn.bdqn.gaobingfa.controller;
 import cn.bdqn.gaobingfa.service.redPacket.UserRedPacketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,8 +20,12 @@ public class UserRedPacketController {
     @Autowired
     private UserRedPacketService userRedPacketService = null;
 
+
     @Resource
     private RedisTemplate<String, Object> stringRedisTemplate;
+
+    @Autowired
+    public StringRedisTemplate stringRedisTemplate1;
 
     @RequestMapping("/packet")
     public String grap(){
@@ -63,4 +68,17 @@ public class UserRedPacketController {
         resultMap.put("message", flag ? "抢红包成功": "抢红包失败");
         return resultMap;
     }
+
+    @RequestMapping(value = "/stringRedisTemplate",method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> stringRedisTemplate(Long redPacketId, Long userId) {
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        Long result = userRedPacketService.stringRedisTemplate(redPacketId, userId);
+        boolean flag = result > 0;
+        resultMap.put("result", flag);
+        resultMap.put("message", flag ? "抢红包成功": "抢红包失败");
+        return resultMap;
+    }
+
+
 }

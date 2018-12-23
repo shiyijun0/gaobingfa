@@ -23,4 +23,6 @@ public interface UserRedPacketService {
 	 * 2--成功，且是最后一个红包
 	 */
 	public Long grapRedPacketByRedis(Long redPacketId, Long userId);
+
+	public Long stringRedisTemplate(Long redPacketId, Long userId);
 }

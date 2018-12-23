@@ -8,7 +8,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 @Component
-@Slf4j
+//@Slf4j
 public class RedisLock1 {
 
     @Autowired

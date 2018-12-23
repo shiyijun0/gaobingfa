@@ -70,7 +70,7 @@ public class data {
         LocalDateTime localDateTime1=LocalDateTime.now();
         System.out.println("****1****"+localDateTime1);
     }
-    
+
 
     public static void main(String[] args)   {
         data data=new data();

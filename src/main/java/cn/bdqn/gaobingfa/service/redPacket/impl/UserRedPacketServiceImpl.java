@@ -4,11 +4,15 @@ import cn.bdqn.gaobingfa.entity.RedPacket;
 import cn.bdqn.gaobingfa.entity.UserRedPacket;
 import cn.bdqn.gaobingfa.mapper.RedPacketMapper;
 import cn.bdqn.gaobingfa.mapper.UserRedPacketMapper;
+import cn.bdqn.gaobingfa.redis.RedisLock;
+import cn.bdqn.gaobingfa.redis.RedisLock1;
 import cn.bdqn.gaobingfa.service.redPacket.RedisRedPacketService;
 import cn.bdqn.gaobingfa.service.redPacket.UserRedPacketService;
+import cn.bdqn.gaobingfa.zookeeper.ZooKeeperDistributedLock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -16,6 +20,10 @@ import org.springframework.transaction.annotation.Transactional;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
+
+import javax.annotation.Resource;
+import java.util.UUID;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Service
 public class UserRedPacketServiceImpl implements UserRedPacketService {
@@ -25,6 +33,14 @@ public class UserRedPacketServiceImpl implements UserRedPacketService {
 
 	@Autowired
 	private RedPacketMapper redPacketDao = null;
+
+	@Autowired
+	private StringRedisTemplate stringRedisTemplate;
+
+	@Autowired
+	private RedisLock1 redisLock1;
+
+	private static AtomicBoolean atomicBoolean=new AtomicBoolean(false);
 
 	// 失败
 	private static final int FAILED = 0;
@@ -252,5 +268,39 @@ public class UserRedPacketServiceImpl implements UserRedPacketService {
 			}
 		}
 		return result;
+	}
+
+	@Override
+	public Long stringRedisTemplate(Long redPacketId, Long userId) {
+		//if(atomicBoolean.compareAndSet(false,true)){
+			// 获取红包信息
+		ZooKeeperDistributedLock zooKeeperDistributedLock=new ZooKeeperDistributedLock(String.valueOf(System.currentTimeMillis()));
+		System.out.println(stringRedisTemplate);
+			 RedPacket redPacket2 = redPacketDao.getRedPacket(redPacketId);
+			// 当前小红包库存大于0
+			if (1==1&& redPacket2.getStock() > 0) {
+				long start=System.currentTimeMillis()+3000;
+				String key="lock"+UUID.randomUUID();
+				//redisLock1.lock(key,String.valueOf(start));
+			zooKeeperDistributedLock.acquireDistributedLock();
+				redPacketDao.decreaseRedPacket(redPacketId);
+				// 生成抢红包信息
+				UserRedPacket redPacket1 = new UserRedPacket();
+				redPacket1.setRedPacketId(redPacketId);
+				redPacket1.setUserId(userId);
+				redPacket1.setAmount(redPacket2.getUnitAmount());
+				redPacket1.setNote("抢红包 " + redPacketId);
+				// 插入抢红包信息
+				int result = userRedPacketDao.grapRedPacket(redPacket1);
+				//atomicBoolean.compareAndSet(true,false);
+				//redisLock1.unlock(key, String.valueOf(start));
+				zooKeeperDistributedLock.unlock();
+				return Long.valueOf(result);
+
+
+			}
+
+		//}
+		return 0L;
 	}
 }

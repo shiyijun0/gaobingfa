@@ -3,7 +3,7 @@ package cn.bdqn.gaobingfa.Atomicity;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Atomicity {
-static     AtomicBoolean atomicBoolean=new AtomicBoolean(false);
+    static     AtomicBoolean atomicBoolean=new AtomicBoolean(false);
 private static int num;
 
 static  Runnable runnable= new Runnable(){
@@ -22,8 +22,9 @@ static  Runnable runnable= new Runnable(){
 };
     public static void main(String[] args) {
 for (int i=0;i<3;i++){
-    Thread thread = new Thread(runnable, "线程" + i);
-    if(atomicBoolean.compareAndSet(true,false)) {
+    Thread thread = new Thread(runnable, "线程******" + i);
+    if(atomicBoolean.compareAndSet(false,true)) {
+        System.out.println("******111********");
         thread.start();
 
     }
