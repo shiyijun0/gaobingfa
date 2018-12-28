@@ -16,18 +16,20 @@ public class ZooKeeperDistributedLock implements Watcher {
     private String lockNode;
     private CountDownLatch latch;
     private CountDownLatch connectedLatch = new CountDownLatch(1);
-    private int sessionTimeout = 30000;
+    private int sessionTimeout = 300000;
 
     public ZooKeeperDistributedLock(String productId){
         this.productId = productId;
         try {
-            String address = "39.105.169.182:2182,39.105.169.182:2181,132.232.73.46:2181,132.232.73.46:2182";
+           // String address = "39.105.169.182:2182,39.105.169.182:2181,132.232.73.46:2181,132.232.73.46:2182";
+            String address = "192.168.244.132:2182";
             zk = new ZooKeeper(address, sessionTimeout, this);
-           /* Stat stat = zk.exists(locksRoot, false);
+            Stat stat = zk.exists(locksRoot, false);
+           // zooKeeper.create(BASE_SERVICES ,"".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
             if (stat == null) {
                 // 如果根节点不存在，则创建根节点
                 zk.create(locksRoot, new byte[0], ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
-            }*/
+            }
             connectedLatch.await();
         } catch (Exception e) {
             throw new LockException(e);
@@ -74,6 +76,7 @@ public class ZooKeeperDistributedLock implements Watcher {
             // 假设productId代表了一个商品id，比如说1
             // locksRoot = locks
             // /locks/10000000000，/locks/10000000001，/locks/10000000002
+            // zooKeeper.create(BASE_SERVICES + SERVICE_NAME+"/child",server_path.getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE,CreateMode.EPHEMERAL_SEQUENTIAL);
                 lockNode = zk.create(locksRoot + "/" + productId, new byte[0], ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL_SEQUENTIAL);
 
             // 看看刚创建的节点是不是最小的节点
