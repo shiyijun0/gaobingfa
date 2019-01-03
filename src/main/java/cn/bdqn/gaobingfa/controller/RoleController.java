@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 
 @Controller
@@ -21,6 +22,8 @@ public class RoleController {
 	// 注册角色服务类
 	@Autowired
 	private RoleService roleService ;
+
+
 
 	@RequestMapping(value = "/getRole")
 	// 注解，使得Spring MVC把结果转化为JSON类型响应，进而找到转换器

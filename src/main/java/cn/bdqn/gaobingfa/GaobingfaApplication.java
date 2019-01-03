@@ -1,5 +1,6 @@
 package cn.bdqn.gaobingfa;
 
+import cn.bdqn.gaobingfa.config.JamesInterceptor;
 import cn.bdqn.gaobingfa.entity.User;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,6 +9,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.scheduling.annotation.AsyncConfigurerSupport;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 
 @SpringBootApplication
 @EnableCaching
