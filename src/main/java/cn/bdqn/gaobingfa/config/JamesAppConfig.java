@@ -14,11 +14,11 @@ import org.springframework.web.servlet.config.annotation.*;
 
 //SpringMVC只扫描Controller；子容器
 //useDefaultFilters=false 禁用默认的过滤规则；
-@Configuration
-@ComponentScan(value="cn.bdqn.gaobingfa",includeFilters={
+//@Configuration
+/*@ComponentScan(value="cn.bdqn.gaobingfa",includeFilters={
 		@Filter(type=FilterType.ANNOTATION,classes={Controller.class})
-},useDefaultFilters=false)
-@EnableWebMvc
+},useDefaultFilters=false)*/
+//@EnableWebMvc
 public class JamesAppConfig extends WebMvcConfigurerAdapter {
 
 	 //拦截器
