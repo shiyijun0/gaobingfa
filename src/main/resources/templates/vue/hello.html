@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Vue 测试实例 - 菜鸟教程(runoob.com)</title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+   <!-- <script th:src="@{vue.js}"></script>-->
+</head>
+<body>
+<div id="app">
+    <div v-html="messages"></div>
+    <p>{{ message }}</p>
+    <p>{{dos}}</p>
+    <p>{{da()}}</p>
+    <p>{{das()}}</p>
+</div>
+
+<script>
+    // 我们的数据对象
+    var data = { message: "菜鸟教程", dos: "www.runoob.com",messages:"错误的信息"}
+  var vm=new Vue({
+       el:"#app",
+       data:data,
+       methods:{
+           da:function(){
+               return "方法设置开始"
+           },
+           das:function () {
+               return "第二份方法结束"
+           }
+       }
+
+   })
+
+    document.write(vm.$data === data) // trueapp
+    document.write("<br>")
+    document.write(vm.$el === document.getElementById('app')) // true
+</script>
+</body>
+</html>
