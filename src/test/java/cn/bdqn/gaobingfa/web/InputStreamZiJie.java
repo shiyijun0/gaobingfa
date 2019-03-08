@@ -1,7 +1,5 @@
 package cn.bdqn.gaobingfa.web;
 
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-
 import java.io.*;
 
 public class InputStreamZiJie {
@@ -35,7 +33,7 @@ public class InputStreamZiJie {
        while ((d=inputStreamReader.read(chars))!=-1){
            stringBuffer.append(chars,0,chars.length);
         }
-        AnnotationConfigApplicationContext
+       // AnnotationConfigApplicationContext
         System.out.println(stringBuffer.toString()+"*******888888888");
        // Writer writer=new FileWriter(file);
        /* BufferedWriter bufferedWriter=new BufferedWriter(writer);
